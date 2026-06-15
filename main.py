@@ -4,6 +4,7 @@ import crud
 from sqlalchemy import select, func
 from sqlalchemy.orm import Session
 
+# commentaire sur le main
 
 def create_sample_data(session: Session):
     print("Insertion des données de test...")
