@@ -4,13 +4,6 @@ import crud
 from sqlalchemy import select, func
 from sqlalchemy.orm import Session
 
-"""
-Hormis l'indexation maladroite [0] dans create_author, tout est fonctionnel et
-solide ! Tu as construit une excellente base (bien structurée) sur laquelle
-venir brancher une interface terminal (input() classiques, librairie Rich, ou
-Textual), ou même une future API web (FastAPI/Flask).
-"""
-
 
 def create_sample_data(session: Session):
     print("Insertion des données de test...")
