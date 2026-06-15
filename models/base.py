@@ -10,11 +10,12 @@ class Base(DeclarativeBase):
     pass
 
 
-load_dotenv()
+# load_dotenv()
 
-url = getenv("DB_URL")
+# url = getenv("DB_URL")
 # url = "postgresql+psycopg://aphe:@127.0.0.1:5432/bibli"
-engine = create_engine(url=url, echo=False)
+engine = create_engine("sqlite:///debo.db")
+# engine = create_engine(url=url, echo=False)
 
 session_local = sessionmaker(
     autoflush=True,
