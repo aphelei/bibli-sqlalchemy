@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %}Ma bibliothèque{% endblock title %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">.important { color: #336699; }</style>
+{% endblock head %}
+{% block content %}
+    <h3 class="important">Base de donnée de la bibliothèque</h3>
+    <table>
+        {% if items[0] == 'books' %}
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genres</th>
+                <th>Infos</th>
+            </tr>
+            {% for book in items[1:] %}
+                <tr>
+                    <th>{{ book.title }}</th>
+                    <th><a href="{{ url_for('search_item', id_item=book.author.id, type_item='author') }}">{{ book.author.name }}</a></th>
+                    <th>{{ book.genres }}</th>
+                    <th>{{ book.details }}</th>
+                </tr>
+            {% endfor %}
+        {% elif items[0] == 'authors' %}
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Livres</th>
+            </tr>
+            {% for author in items[1:] %}
+                <tr>
+                    <th>{{ author.name }}</th>
+                    <th>{{ author.surname }}</th>
+                    <th>
+                        {% for book in author.books %}
+                            <a href="{{ url_for('search_item', id_item=book.id, type_item='book') }}">{{ book.title }}</a>
+                        {% endfor %}
+                    </th>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+{% endblock content %}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        {% block head %}
+            <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+            <title>
+                {% block title %}
+                    Ma bibliothèque
+                {% endblock title %}
+            </title>
+        {% endblock head %}
+    </head>
+    <body>
+        <div id="content">
+            <form action="{{ url_for("list_items") }}" method="post">
+                <!-- <input type="hidden" name="type_item" value="books"> -->
+                <button type="submit" name="type_item" value="books">Livres</button>
+                <button type="submit" name="type_item" value="authors">Authors</button>
+            </form>
+            <a href="{{ url_for('list_items', type_item='books') }}">tatatat</a>
+            {% block content %}
+            {% endblock content %}
+        </div>
+        <div id="footer">
+            {% block footer %}
+                <hr>
+            {% endblock footer %}
+        </div>
+    </body>
+</html>

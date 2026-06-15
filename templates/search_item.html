@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %}Infos {{ type_item }}{% endblock title %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">.important { color: #336699; }</style>
+{% endblock head %}
+{% block content %}
+    <h3 class="important">Base de donnée de la bibliothèque</h3>
+    <table>
+        {% if type_item == 'book' %}
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genres</th>
+                <th>Infos</th>
+            </tr>
+            <tr>
+                <th><a href="{{ url_for('search_item', id_item=item.id, type_item='book') }}">{{ item.title }}</a></th>
+                <th>{{ item.author }}</th>
+                <th>{{ item.genres }}</th>
+                <th>{{ item.details }}</th>
+            </tr>
+        {% elif type_item == 'author' %}
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Livres</th>
+            </tr>
+            <tr>
+                <th><a href="{{ url_for('search_item', id_item=item.id, type_item='author') }}">{{ item.name }}</a></th>
+                <th>{{ item.surname }}</th>
+                <th>
+                    {% for book in item.books %}
+                        <a href="{{ url_for('search_item', id_item=book.id, type_item='book') }}">{{ book.title }}</a>
+                    {% endfor %}
+                </th>
+            </tr>
+        {% endif %}
+    </table>
+{% endblock content %}
