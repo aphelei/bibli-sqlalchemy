@@ -62,17 +62,25 @@ def list_books(session):  # pagination avec select(Book).limit(10).offset(20)
         .order_by(Book.id)
     ).all()
 
-    print("====== liste livres =============")
+    r = []
     if not books:
-        print("Aucun livre dans la base.")
+        return "Aucun livre dans la base."
     for book in books:
         pages = book.details.nb_pages if book.details else "N/A"
         resume = book.details.resume if book.details else "N/A"
         # print(book)
-        print(
-            f"- {book.id} {book.title} ({book.author.name}) : {[g.genre for g in book.genres]} : {pages} pages : {resume}"
-        )
-    print(books[-1])
+        r.append([book.id, book.title, (book.author.id, book.author.name), [g.genre for g in book.genres], pages, resume])
+    for book in r:
+        print(book)
+    return books
+
+def search_book(session, book_id):
+    book = session.get(Book, book_id)
+    if book:
+        pages = book.details.nb_pages if book.details else "N/A"
+        resume = book.details.resume if book.details else "N/A"
+        print([book.id, book.title, (book.author.id, book.author.name), [g.genre for g in book.genres], pages, resume])
+        return book
 
 
 def modify_book(session, book_id, book_title):
@@ -93,9 +101,6 @@ def delete_book(session, book_id):
         return f"{book.title} deleted"
     return "book id inexistant"
 
-
-def search_book(session, title, author):
-    pass
 
 
 # Rechercher un livre avec un mot-clé (ex: select(Book).where(Book.title.ilike('%mot%'))).

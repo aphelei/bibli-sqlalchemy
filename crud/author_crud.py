@@ -22,13 +22,22 @@ def list_authors(session):
         .order_by(Author.id)
     ).all()
 
-    print("====== liste authors =============")
+    r = []
     if not authors:
-        print("Aucun authors dans la base.")
+        return "Aucun authors dans la base."
     for author in authors:
-        titres = [livre.title for livre in author.books]
-        print("-", author.id, author.name, author.surname, titres)
+        titres = [(livre.id, livre.title) for livre in author.books]
+        r.append([author.id, author.name, author.surname, titres])
+    for author in authors:
+        print(author)
+    return authors
 
+def search_author(session, author_id):
+    author = session.get(Author, author_id)
+    if author:
+        titres = [(book.id, book.title) for book in author.books]
+        print([author.id, author.name, author.surname, titres])
+        return author
 
 def modify_author(session, author_id, authors_name, authors_surname):
     # stmt = update(Book).where(Book.id == book_id).values(title=book_title)
